@@ -63,10 +63,10 @@
 
 # Подготовка
 Убедитесь, что у вас установлены следующие программы и расширения:
--[NodeJS](https://nodejs.org/en)
--[Visual Studio Code](https://code.visualstudio.com/)
--[XAMPP](https://www.apachefriends.org/ru/index.html)
--[ThunderClient](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
+- [NodeJS](https://nodejs.org/en)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [XAMPP](https://www.apachefriends.org/ru/index.html)
+- [ThunderClient](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)
 
 # Установка
 1. Склонируйте репозиторий
