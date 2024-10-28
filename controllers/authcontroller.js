@@ -13,10 +13,9 @@ exports.signup = (req, res) => {
     password: bcrypt.hashSync(req.body.password, 8),
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    isAdmin: req.body.isAdmin || false,
   })
     .then((user) => {
-      const roles = user.isAdmin ? ["ROLE_ADMIN"] : ["ROLE_USER"];
+      const roles = ["ROLE_USER"];
       res.send({
         message: "User was registered successfully!",
         roles: roles,

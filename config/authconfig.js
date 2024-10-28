@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
-    secret: "edushare"
+    secret: process.env.AUTH_SECRET,
 };
