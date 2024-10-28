@@ -1,5 +1,4 @@
 const Rating = require("../models/rating");
-const User = require("../models/user");
 
 exports.addRate = async (req, res) => {
   const rating = await Rating.create({
