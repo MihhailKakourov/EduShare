@@ -13,6 +13,10 @@ app.get('/', (req, res) => {
 })
 
 require("./routes/authroute")(app)
+// require("./routes/commentroute")(app)
+require("./routes/materialroute")(app)
+require("./routes/ratingroute")(app)
+// require("./routes/userroute")(app)
 
 const PORT = process.env.PORT || 3000;
 

@@ -10,6 +10,6 @@ module.exports = function(app) {
     next();
   });
 
-  app.put("/material", verifyToken, materialController.modifyMaterial)
+  app.put('/materials/:materialId', verifyToken, materialController.modifyMaterial);
   app.post("/material", verifyToken, materialController.addMaterial)
 };

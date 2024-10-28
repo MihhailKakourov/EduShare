@@ -11,4 +11,5 @@ module.exports = function(app) {
   });
 
   app.post("/rating", verifyToken, ratingController.addRate)
+  app.put("/rating/:ratingId", verifyToken, ratingController.modifyRate)
 };
