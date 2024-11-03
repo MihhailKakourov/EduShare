@@ -20,6 +20,7 @@ require("./routes/commentroute")(app);
 require("./routes/materialroute")(app);
 require("./routes/ratingroute")(app);
 require("./routes/userroute")(app);
+require("./routes/adminroute")(app);
 
 app.listen(3000, () => {
     console.log('Server is running on port ' + 3000 + '.');
