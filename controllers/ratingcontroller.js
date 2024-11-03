@@ -13,12 +13,28 @@ exports.modifyRate = async (req, res) => {
   const ratingId = req.params.ratingId;
   const { rate } = req.body;
   const rating = await Rating.findOne({
-    where: { id: ratingId, user_id: req.user_id },
+    where: { id: ratingId, user_id: req.userId },
   });
   if (!rating) {
-    return res.status(404).send({ message: "Rating not found" });
+    return res.status(404).send({ message: "Rate not found" });
   }
   await Rating.update({ rating: rate }, { where: { id: ratingId } });
 
-  res.status(200).send({ message: "Rating updated" });
+  res.status(200).send({ message: "Rate updated" });
 };
+
+exports.deleteRate = async (req, res) => {
+  const ratingId = req.params.ratingId;
+  const rating = await Rating.findOne({
+    where: { id: ratingId, user_id: req.userId },
+  });
+
+  if (!rating) {
+    return res.status(404).send({ message: "Rate not found" });
+  }
+
+  await Rating.destroy({ where: { id: ratingId } });
+
+  res.status(200).send({ message: "Rate deleted" });
+};
+

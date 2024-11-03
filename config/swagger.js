@@ -14,6 +14,20 @@ const swaggerOptions = {
                 url: 'http://localhost:3000',
             },
         ],
+        components: {
+            securitySchemes: {
+                accessTokenAuth: {
+                    type: 'apiKey',
+                    in: 'header',
+                    name: 'x-access-token',
+                },
+            },
+        },
+        security: [
+            {
+                accessTokenAuth: [],
+            },
+        ],
     },
     apis: ['./routes/*.js'],
 };
@@ -21,7 +35,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 const setupSwagger = (app) => {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 };
 
 module.exports = setupSwagger;

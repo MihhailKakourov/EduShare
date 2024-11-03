@@ -6,20 +6,16 @@ const Rating = require("./rating");
 const Type = require("./type");
 const User = require("./user");
 
-const MaterialType = sequelize.define(
-  "MaterialType",
-  {},
-  { timestamps: false }
-);
+const MaterialType = sequelize.define('MaterialType', {}, { timestamps: false });
 
-Material.belongsToMany(Type, { through: MaterialType, as: "type" });
-Type.belongsToMany(Material, { through: MaterialType, as: "material" });
+Material.belongsToMany(Type, { through: MaterialType, as: 'types' });
+Type.belongsToMany(Material, { through: MaterialType, as: 'materials' })
 
-Material.hasMany(Rating, { as: "rating", foreignKey: "materialId" });
-Rating.belongsTo(Material, { as: "material", foreignKey: "materialId" });
+Material.belongsTo(Category, { foreignKey: "category_id", as: "category" });
+Category.hasMany(Material, { foreignKey: "category_id", as: "materials" });
 
-Material.hasMany(Category, { as: "category", foreignKey: "materialId" });
-Category.belongsTo(Material, { as: "material", foreignKey: "materialId" });
+User.hasMany(Comment, { foreignKey: "user_id" });
+Comment.belongsTo(User, { foreignKey: "user_id" });
 
 module.exports = {
   Category,
@@ -28,4 +24,5 @@ module.exports = {
   Rating,
   Type,
   User,
+  MaterialType
 };

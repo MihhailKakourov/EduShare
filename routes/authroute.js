@@ -38,9 +38,6 @@ module.exports = function(app) {
    *               lastname:
    *                 type: string
    *                 description: The last name of the new user
-   *               isAdmin:
-   *                 type: boolean
-   *                 description: Specifies if the user is an admin
    *     responses:
    *       200:
    *         description: User was registered successfully

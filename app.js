@@ -9,7 +9,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Swagger setup
 setupSwagger(app);
 
 app.get('/', (req, res) => {

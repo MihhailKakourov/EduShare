@@ -29,6 +29,14 @@ const Material = db.define("Material", {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  category_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: "Categories",
+      key: "id",
+    },
+  },
 });
 
 module.exports = Material;
