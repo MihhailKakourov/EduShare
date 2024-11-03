@@ -17,7 +17,7 @@ exports.addMaterial = async (req, res) => {
       const types = await Type.findAll({
         where: { id: req.body.typeIds },
       });
-      await material.setTypes(types);
+      await material.setTypes(types); // Изменено на setTypes
     }
 
     res.status(201).send(material);
@@ -37,9 +37,7 @@ exports.modifyMaterial = async (req, res) => {
     }
 
     if (material.user_id !== req.userId) {
-      return res
-        .status(403)
-        .send({ message: "You are not authorized to modify this material" });
+      return res.status(403).send({ message: "You are not authorized to modify this material" });
     }
 
     if (req.body.name) {
@@ -64,9 +62,9 @@ exports.modifyMaterial = async (req, res) => {
       const types = await Type.findAll({
         where: { id: req.body.typeIds },
       });
-      await material.setTypes(types);
+      await material.setTypes(types); // Изменено на setTypes
     } else {
-      await material.setTypes([]);
+      await material.setTypes([]); // Сброс типов, если нет переданных id
     }
 
     res.status(200).send(material);
@@ -75,18 +73,25 @@ exports.modifyMaterial = async (req, res) => {
   }
 };
 
-
 exports.deleteMaterial = async (req, res) => {
   const materialId = req.params.materialId;
-  const material = await Material.findOne({
-    where: { id: materialId, user_id: req.userId },
-  });
-  if (!material) {
-    return res.status(404).send({ message: "Material not found" });
-  }
-  await Material.destroy({ where: { id: materialId } });
 
-  res.status(200).send({ message: "Material deleted" });
+  try {
+    const material = await Material.findOne({ where: { id: materialId } });
+
+    if (!material) {
+      return res.status(404).send({ message: "Material not found." });
+    }
+
+    if (material.user_id !== req.userId) {
+      return res.status(403).send({ message: "You are not authorized to modify this material" });
+    }
+
+    await Material.destroy({ where: { id: materialId } });
+    res.status(200).send({ message: "Material deleted" });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 };
 
 exports.searchMaterialsByTitle = async (req, res) => {
@@ -95,6 +100,8 @@ exports.searchMaterialsByTitle = async (req, res) => {
   if (!searchQuery) {
     return res.status(400).send({ message: "Title query parameter is required" });
   }
+
+  try {
     const materials = await Material.findAll({
       where: {
         name: {
@@ -104,9 +111,16 @@ exports.searchMaterialsByTitle = async (req, res) => {
     });
 
     res.status(200).send(materials);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 };
 
 exports.showAllMaterials = async (req, res) => {
-  const materials = await Material.findAll()
-  res.status(200).send(materials);
-}
+  try {
+    const materials = await Material.findAll();
+    res.status(200).send(materials);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

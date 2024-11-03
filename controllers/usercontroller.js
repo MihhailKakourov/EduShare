@@ -2,6 +2,7 @@ const User = require("../models/user");
 const { Op } = require('sequelize');
 const bcrypt = require("bcryptjs");
 
+
 exports.modifyCredentials = async (req, res) => {
   try {
     const user = await User.findByPk(req.userId);
@@ -13,7 +14,7 @@ exports.modifyCredentials = async (req, res) => {
       user.username = req.body.username;
     }
 
-    if (req.body.fistname) {
+    if (req.body.firstname) {
       user.firstname = req.body.firstname;
     }
 
@@ -33,17 +34,17 @@ exports.modifyCredentials = async (req, res) => {
 };
 
 exports.getUsers = async (req, res) => {
-    try {
-        const users = await User.findAll({
-            attributes: ["username", "email"],
-            where: {
-                isAdmin: {
-                    [Op.eq]: false
-                }
-            }
-        });
-        res.status(200).send(users);
-    } catch (e) {
-        res.status(500).send({ message: e.message });
-    }
-}
+  try {
+    const users = await User.findAll({
+      attributes: ["username", "email"],
+      where: {
+        isAdmin: {
+          [Op.eq]: false
+        }
+      }
+    });
+    res.status(200).send(users);
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+};
