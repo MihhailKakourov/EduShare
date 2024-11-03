@@ -15,6 +15,7 @@ module.exports = function(app) {
    *   post:
    *     summary: Register a new user
    *     description: Creates a new user in the system.
+   *     tags: [Authorization]
    *     requestBody:
    *       required: true
    *       content:
@@ -52,6 +53,7 @@ module.exports = function(app) {
    *   post:
    *     summary: Log in a user
    *     description: Authenticates a user and returns a token.
+   *     tags: [Authorization]
    *     requestBody:
    *       required: true
    *       content:

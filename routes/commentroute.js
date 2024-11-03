@@ -15,6 +15,7 @@ module.exports = function (app) {
  * /comment:
  *   post:
  *     summary: Add a new comment
+ *     tags: [Comments]
  *     security:
  *       - accessTokenAuth: []
  *     parameters:
@@ -44,6 +45,7 @@ module.exports = function (app) {
  * /comment/{commentId}:
  *   put:
  *     summary: Modify a comment
+ *     tags: [Comments]
  *     security:
  *       - accessTokenAuth: []
  *     parameters:
@@ -73,8 +75,9 @@ app.put("/comment/:commentId", verifyToken, controller.modifyComment);
   /**
    * @swagger
    * /comment/{commentId}:
-   *   post:
+   *   delete:
    *     summary: Delete a comment
+   *     tags: [Comments]
    *     security:
    *       - accessTokenAuth: []
    *     parameters:
@@ -88,13 +91,14 @@ app.put("/comment/:commentId", verifyToken, controller.modifyComment);
    *       200:
    *         description: Comment deleted
    */
-  app.post("/comment/:commentId", verifyToken, controller.deleteComment);
+  app.delete("/comment/:commentId", verifyToken, controller.deleteComment);
 
   /**
    * @swagger
    * /comment/{materialId}:
    *   get:
    *     summary: Get comments for a specific material
+   *     tags: [Comments]
    *     parameters:
    *       - in: path
    *         name: materialId

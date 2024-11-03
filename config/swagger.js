@@ -28,6 +28,29 @@ const swaggerOptions = {
                 accessTokenAuth: [],
             },
         ],
+        tags: [
+        {
+            name: "Authorization",
+            description: "Authorization related endpoints"
+        },
+        {
+            name: "Comments",
+            description: "Comments related endpoints"
+        },
+        {
+            name: "Materials",
+            description: "Materials related endpoints"
+        },
+        {
+            name: "Ratings",
+            description: "Ratings related endpoints"
+        },
+        {
+            name: "Users",
+            description: "Users related endpoints"
+        }
+    
+    ]
     },
     apis: ['./routes/*.js'],
 };

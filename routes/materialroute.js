@@ -15,6 +15,7 @@ module.exports = function (app) {
  * /material/{materialId}:
  *   put:
  *     summary: Modify a material
+ *     tags: [Materials]
  *     security:
  *       - accessTokenAuth: []
  *     parameters:
@@ -63,6 +64,7 @@ app.put('/material/:materialId', verifyToken, controller.modifyMaterial);
  * /material:
  *   post:
  *     summary: Add a new material
+ *     tags: [Materials]
  *     security:
  *       - accessTokenAuth: []
  *     requestBody:
@@ -103,6 +105,7 @@ app.post("/material", verifyToken, controller.addMaterial);
    * /material/{materialId}:
    *   delete:
    *     summary: Delete a material
+   *     tags: [Materials]
    *     security:
    *       - accessTokenAuth: []
    *     parameters:
@@ -122,6 +125,7 @@ app.post("/material", verifyToken, controller.addMaterial);
  * /material/search:
  *   get:
  *     summary: Search materials by title
+ *     tags: [Materials]
  *     parameters:
  *       - in: query
  *         name: name
@@ -140,6 +144,7 @@ app.post("/material", verifyToken, controller.addMaterial);
    * /material:
    *   get:
    *     summary: Show all materials
+   *     tags: [Materials]
    *     responses:
    *       200:
    *         description: List of materials

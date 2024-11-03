@@ -15,6 +15,7 @@ module.exports = function (app) {
  * /user:
  *   put:
  *     summary: Modify user credentials
+ *     tags: [Users]
  *     security:
  *       - accessTokenAuth: []
  *     requestBody:
@@ -51,6 +52,7 @@ app.put("/user", verifyToken, userController.modifyCredentials);
    * /users:
    *   get:
    *     summary: Get list of all users
+   *     tags: [Users]
    *     responses:
    *       200:
    *         description: List of users

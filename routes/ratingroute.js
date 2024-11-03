@@ -15,6 +15,7 @@ module.exports = function (app) {
  * /rating:
  *   post:
  *     summary: Add a new rating
+ *     tags: [Ratings]
  *     security:
  *       - accessTokenAuth: []
  *     requestBody:
@@ -39,6 +40,7 @@ module.exports = function (app) {
  * /rating/{ratingId}:
  *   put:
  *     summary: Modify a rating
+ *     tags: [Ratings]
  *     security:
  *       - accessTokenAuth: []
  *     parameters:
@@ -65,8 +67,9 @@ module.exports = function (app) {
   /**
    * @swagger
    * /rating/{ratingId}:
-   *   post:
+   *   delete:
    *     summary: Delete a rating
+   *     tags: [Ratings]
    *     security:
    *       - accessTokenAuth: []
    *     parameters:
@@ -80,5 +83,5 @@ module.exports = function (app) {
    *       200:
    *         description: Rating deleted
    */
-  app.post("/rating/:ratingId", verifyToken, controller.deleteRate);
+  app.delete("/rating/:ratingId", verifyToken, controller.deleteRate);
 };
