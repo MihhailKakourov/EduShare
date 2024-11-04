@@ -2,6 +2,7 @@ const Material = require("../models/material");
 const { Op } = require("sequelize");
 const User = require("../models/user");
 const Type = require("../models/type")
+const Category = require("../models/category")
 
 exports.addMaterial = async (req, res) => {
   try {
@@ -17,10 +18,29 @@ exports.addMaterial = async (req, res) => {
       const types = await Type.findAll({
         where: { id: req.body.typeIds },
       });
-      await material.setTypes(types); // Изменено на setTypes
+      await material.setTypes(types);
     }
 
-    res.status(201).send(material);
+    const formattedMaterial = await Material.findByPk(material.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
+        {
+          model: Type,
+          as: "types",
+          attributes: ["name"],
+        },
+        {
+          model: Category,
+          as: "category",
+          attributes: ["name"],
+        },
+      ]
+    });
+
+    res.status(201).send(formattedMaterial);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -62,9 +82,9 @@ exports.modifyMaterial = async (req, res) => {
       const types = await Type.findAll({
         where: { id: req.body.typeIds },
       });
-      await material.setTypes(types); // Изменено на setTypes
+      await material.setTypes(types);
     } else {
-      await material.setTypes([]); // Сброс типов, если нет переданных id
+      await material.setTypes([]);
     }
 
     res.status(200).send(material);
@@ -118,7 +138,25 @@ exports.searchMaterialsByTitle = async (req, res) => {
 
 exports.showAllMaterials = async (req, res) => {
   try {
-    const materials = await Material.findAll();
+    const materials = await Material.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
+        {
+          model: Category,
+          as: "category",
+          attributes: ["id", "name"],
+        },
+        {
+          model: Type,
+          as: "types",
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
     res.status(200).send(materials);
   } catch (error) {
     res.status(500).send({ message: error.message });

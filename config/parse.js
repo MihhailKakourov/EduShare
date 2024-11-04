@@ -21,8 +21,8 @@ async function loadData() {
 
     await Promise.all(data.categories.map((item) => Category.create(item)));
     await Promise.all(HashPWDUsers.map((item) => User.create(item)));
-    await Promise.all(data.comments.map((item) => Comment.create(item)));
     await Promise.all(data.materials.map((item) => Material.create(item)));
+    await Promise.all(data.comments.map((item) => Comment.create(item)));
     await Promise.all(data.ratings.map((item) => Rating.create(item)));
     await Promise.all(data.types.map((item) => Type.create(item)));
     await Promise.all(data.materialTypes.map((item) => MaterialType.create(item)));

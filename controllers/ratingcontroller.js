@@ -1,4 +1,6 @@
 const Rating = require("../models/rating");
+const User = require("../models/user")
+const Material = require("../models/material")
 
 exports.addRate = async (req, res) => {
   try {
@@ -7,7 +9,21 @@ exports.addRate = async (req, res) => {
       material_id: req.body.materialId,
       rating: req.body.rate,
     });
-    res.status(201).send(rating);
+
+    const formattedRating = await Rating.findByPk(rating.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
+        {
+          model: Material,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
+    res.status(201).send(formattedRating);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

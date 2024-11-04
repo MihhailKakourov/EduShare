@@ -1,4 +1,3 @@
-// controllers/adminController.js
 const { Category, Comment, Material, Rating, Type, User } = require('../models');
 
 // Category CRUD

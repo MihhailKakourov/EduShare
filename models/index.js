@@ -26,6 +26,9 @@ Rating.belongsTo(Material, {foreignKey:"material_id"});
 Material.hasMany(Comment, {foreignKey:"material_id"});
 Comment.belongsTo(Material, {foreignKey:"material_id"})
 
+User.hasMany(Material, {foreignKey:"user_id"})
+Material.belongsTo(User, {foreignKey:"user_id"})
+
 module.exports = {
   Category,
   Comment,

@@ -1,9 +1,11 @@
-const Comment = require('../models/comment');
-const User = require("../models/user")
+const { Material, User, Comment } = require('../models');
 
 exports.addComment = async (req, res) => {
   try {
     const materialId = req.headers['materialid'];
+
+    const material = await Material.findByPk(materialId);
+    const user = await User.findByPk(req.userId);
     
     const comment = await Comment.create({
       user_id: req.userId,
@@ -11,7 +13,14 @@ exports.addComment = async (req, res) => {
       content: req.body.content,
     });
     
-    res.status(201).send(comment);
+    res.status(201).send({
+      comment:{
+        id: comment.id,
+        content: comment.content,
+        username: user.username,
+        materialTitle: material.name
+      }
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -71,6 +80,10 @@ exports.getCommentsByMaterial = async (req, res) => {
           model: User,
           attributes: ["id", "username"],
         },
+        {
+          model: Material,
+          attributes: ["id", "name"],
+        }
       ],
       order: [["createdAt", "DESC"]],
     });
@@ -79,7 +92,15 @@ exports.getCommentsByMaterial = async (req, res) => {
       return res.status(404).send({ message: "No comments found for this material" });
     }
 
-    res.status(200).send(comments);
+    const formattedComments = comments.map(comment => ({
+      id: comment.id,
+      content: comment.content,
+      username: comment.User.username,
+      materialTitle: comment.Material.name,
+      createdAt: comment.createdAt
+    }))
+
+    res.status(200).send(formattedComments);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Error occurred while retrieving comments" });
